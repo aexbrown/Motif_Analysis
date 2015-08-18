@@ -3,15 +3,14 @@
 % the beginning and end to avoid unrealistic extrapolations
 
 % load the eigenworms
-load(['/Users/abrown/Andre/wormVideos/results-04-02-2012/'... 
-    'Laura Grundy/4/gene NA/allele NA/N2/eigenWorms_20-files_13-PCs.mat']);
+load('/Users/abrown/Andre/wormVideos/results-12-05-10/eigenwormsN2.mat')
 
 % what's the minimum number of non-NaN frames that are allowed?
 minPoints = 10000;
 
 % set the root directory
 directory = ['/Users/abrown/Andre/wormVideos/results-12-05-10/'...
-    'Laura Grundy/'];
+    'wild-isolates/'];
 
 % get the list of files
 [fileList, wormNames] = dirSearch(directory, 'angleArray.mat');
@@ -29,7 +28,7 @@ for ii = 1:numel(fileList)
     end
     
     % get the projected amplitudes
-    numEigWorms = 8;
+    numEigWorms = 20;
     timeSeries = eigenWormProject(eigenWorms, angles, numEigWorms)';
     
     % remove leading and trailing NaN values
@@ -57,18 +56,18 @@ for ii = 1:numel(fileList)
     if sum(~isnan(timeSeries(1, :))) >= minPoints
         
         % initialise timeSeriesNoNaN
-        timeSeriesNoNaN = timeSeries;
+        projectedAmpsNoNaN = timeSeries;
         
         % interpolate over NaN values
         for j = 1:size(timeSeries, 1)
             pAmp = timeSeries(j, :);
             pAmp(isnan(pAmp)) = interp1(find(~isnan(pAmp)),...
                 pAmp(~isnan(pAmp)), find(isnan(pAmp)),'linear', 'extrap');
-            timeSeriesNoNaN(j, :) = pAmp;
+            projectedAmpsNoNaN(j, :) = pAmp;
         end
         
         % save interpolated data
         save(strrep(fileList{ii}, 'angleArray', 'projectedAmpsNoNaN'), ...
-            'timeSeriesNoNaN')
+            'projectedAmpsNoNaN')
     end
 end
