@@ -25,7 +25,7 @@
 % http://www.mathworks.co.uk/support/tech-notes/1600/1605.html (jan 2013)
 
 % set the root directory where the projected amplitudes are
-directory = '/Users/abrown/Andre/wormVideos/Motif_Analysis/sample_data/';
+directory = '/Users/abrown/Andre/wormVideos/Motif_Analysis_SampleData/sample_data/';
 
 % find feature data files and their corresponding worm names.  This
 % step relies on a regular expression to parse the file path to get the
@@ -38,7 +38,7 @@ directory = '/Users/abrown/Andre/wormVideos/Motif_Analysis/sample_data/';
 % interpolate of the NaN values, and save an interpolated time series file
 % for each feature file.
 minPoints = 13000;
-interpNaN(fileList, 'projectedAmpsNoNaN.mat', minPoints, 1)
+interpNaN(fileList, 'projectedAmpsNoNaN.mat', minPoints, 1, 1)
 
 % re-create fileList looking for interpolated NaN files
 [fileList, wormNames] = dirSearch(directory, 'projectedAmpsNoNaN.mat');
