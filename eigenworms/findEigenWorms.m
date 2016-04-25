@@ -64,7 +64,7 @@ covarianceMat = cov(angleArray(~isnan(angleArray(:,1)),:),1);
 eVals = sort(diag(eVals),'descend');
 
 % keep the numEigWorms dimensions that capture most of the variance
-eigenWorms = M(:, end:-1:end - numEigWorms)';
+eigenWorms = M(:, end:-1:end - numEigWorms +1)';
 eigenVals = eVals(1:numEigWorms);
 
 if verbose
