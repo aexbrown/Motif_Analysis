@@ -23,7 +23,7 @@ function [eigenWorms, eigenVals] = findEigenWorms(angleArray, numEigWorms, verbo
 % 
 % 
 % Copyright Medical Research Council 2013
-% André Brown, andre.brown@csc.mrc.ac.uk, aexbrown@gmail.com
+% Andrï¿½ Brown, andre.brown@csc.mrc.ac.uk, aexbrown@gmail.com
 % 
 % 
 % The MIT License
@@ -55,7 +55,7 @@ if isempty(~isnan(angleArray))
 end
 
 % only use non-NaN frames for calculating the covariance matrix
-covarianceMat = cov(angleArray(~isnan(angleArray(:,1)),:),1);
+covarianceMat = cov(angleArray,0,'omitrows');
 
 % get the eigenvectors and eigenvalues of the covariance matrix
 [M, eVals] = eig(covarianceMat);
@@ -64,7 +64,7 @@ covarianceMat = cov(angleArray(~isnan(angleArray(:,1)),:),1);
 eVals = sort(diag(eVals),'descend');
 
 % keep the numEigWorms dimensions that capture most of the variance
-eigenWorms = M(:, end:-1:end - numEigWorms +1)';
+eigenWorms = M(:, end:-1:end - numEigWorms + 1)';
 eigenVals = eVals(1:numEigWorms);
 
 if verbose
@@ -81,6 +81,7 @@ if verbose
         subplot(ceil(numEigWorms/2),2,i)
         plot(eigenWorms(i,:), 'Color', [1 0.5 0.1], 'LineWidth', 2)
         xlim([0 size(eigenWorms, 2) + 1])
+        title(num2str(i))
         %adjust font and font size
         set(gca, 'FontName', 'Helvetica', 'FontSize', 13);
     end
