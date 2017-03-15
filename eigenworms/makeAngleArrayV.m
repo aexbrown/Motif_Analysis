@@ -56,7 +56,7 @@ angles = atan2(dY, dX);
 
 % need to deal with cases where angle changes discontinuously from -pi
 % to pi and pi to -pi.  
-angles = unwrap(angles);
+angles = unwrap(angles,[],2);
 
 % rotate skeleton angles so that mean orientation is zero
 meanAngles = mean(angles,2);
