@@ -55,28 +55,8 @@ dY = diff(y,1,2);
 angles = atan2(dY, dX);
 
 % need to deal with cases where angle changes discontinuously from -pi
-% to pi and pi to -pi.  In these cases, subtract 2pi and add 2pi
-% respectively to all remaining points.  This effectively extends the
-% range outside the -pi to pi range.  Everything is re-centred later
-% when we subtract off the mean.
-
-% find discontinuities larger than pi (skeleton cannot change direction
-% more than pi from one segment to the next)
-dAngle = diff(angles,1,2);
-[positiveJumpsRow, positiveJumpsCol] = find(dAngle > pi);
-[negativeJumpsRow, negativeJumpsCol] = find(dAngle < -pi);
-
-% subtract 2pi from remainging data after positive jumps
-for jj = 1:length(positiveJumpsRow)
-    angles(positiveJumpsRow(jj),(positiveJumpsCol(jj) + 1):end) = ...
-        angles(positiveJumpsRow(jj),(positiveJumpsCol(jj) + 1):end) - 2*pi;%+1 to cancel shift of diff
-end
-
-% add 2pi to remaining data after negative jumps
-for jj = 1:length(negativeJumpsRow)
-    angles(negativeJumpsRow(jj),(negativeJumpsCol(jj) + 1):end) = ...
-        angles(negativeJumpsRow(jj),(negativeJumpsCol(jj) + 1):end) + 2*pi;%+1 to cancel shift of diff
-end
+% to pi and pi to -pi.  
+angles = unwrap(angles,[],2);
 
 % rotate skeleton angles so that mean orientation is zero
 meanAngles = mean(angles,2);
