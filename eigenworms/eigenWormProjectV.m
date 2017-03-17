@@ -1,4 +1,4 @@
-function [projectedAmps] = projectOnEigenWormsV(eigenWorms, angleArray, numEigWorms)
+function [projectedAmps] = eigenWormProjectV(eigenWorms, angleArray, numEigWorms)
 
 %project a given angle array onto predefined eigenWorms.  Only use the
 %first numEigWorms eigenWorms.
